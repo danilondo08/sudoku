@@ -22,7 +22,7 @@ class Board:
             for column in range(9):
                 if self.squares[row][column] == '':
                     self.squares[row][column] = ' '
-                print(self.squares[row][column], end=('   '))
+                print("|  "+self.squares[row][column], end=('   '))
                 cont += 1
                 if cont % 18 == 0 or cont % 9 == 0 or cont % 27 == 0:
                     print("|")
@@ -141,32 +141,34 @@ class Board:
                 if self.squares[row][column]==' ':
                         if len(self.emptySquares[row][column])==1:
                             self.squares[row][column]=self.emptySquares[row][column]
+                            self.squares[row][column]= ' '.join([str(elem) for elem in self.squares[row][column]])
+                            self.emptySquares[row][column]=[]
 
     def discardBySquares(self):
-        # for row in range(3):
-        #     for column in range(3):
-        #         if self.squares[row][column] == ' ':
-        #             # print(self.emptySquares[row][column])
-        #             # print(self.squaresBySquares[0])
-        #             prueba = self.__possibleNumbers(
-        #                 self.emptySquares[row][column], self.squaresBySquares[0])
-                    # print(prueba)
-        # for row in range(3):
-        #     for column in range(3, 6):
-        #         if self.squares[row][column] == ' ':
-        #             print(self.emptySquares[row][column])
-        #             print(self.squaresBySquares[1])
-        #             prueba2 = self.__possibleNumbers(
-        #                 self.emptySquares[row][column], self.squaresBySquares[1])
-        #             print(prueba2)
+        for row in range(3):
+            for column in range(3):
+                if self.squares[row][column] == ' ':
+                    print(self.emptySquares[row][column])
+                    print(self.squaresBySquares[0])
+                    self.emptySquares[row][column] = self.__possibleNumbers(
+                        self.emptySquares[row][column], self.squaresBySquares[0])
+                    
+        for row in range(3):
+            for column in range(3, 6):
+                if self.squares[row][column] == ' ':
+                    print(self.emptySquares[row][column])
+                    print(self.squaresBySquares[1])
+                    self.emptySquares[row][column]= self.__possibleNumbers(
+                        self.emptySquares[row][column], self.squaresBySquares[1])
+                    
         for row in range(3):
             for column in range(6, 9):
                 if self.squares[row][column] == ' ':
                     print(self.emptySquares[row][column])
                     print(self.squaresBySquares[2])
-                    prueba= self.__possibleNumbers(
+                    self.emptySquares[row][column]= self.__possibleNumbers(
                         self.emptySquares[row][column], self.squaresBySquares[2])
-                    print(prueba)
+                    
 
         for row in range(3, 6):
             for column in range(3):
@@ -207,26 +209,29 @@ class Board:
 
 sudoku = Board([], [], [], [])
 sudoku.initializeSquares()
-sudoku.sudokuBoard()
+# sudoku.sudokuBoard()
 sudoku.initializeEmptySquares()
-# sudoku.emptySquaresBoard()
 sudoku.discardByRows()
-# sudoku.emptySquaresBoard()
-# sudoku.emptySquaresBoard()
+sudoku.printBoard(sudoku.emptySquares)
 sudoku.initializeSquaresByColumns()
-# print(sudoku.emptySquares[0][5])
 sudoku.discardByColumns()
-# print(sudoku.squaresByColumns[5])
-# print()
-
-# print('*'*124)
-# sudoku.emptySquaresBoard()
 sudoku.printBoard(sudoku.emptySquares)
 sudoku.replaceNumbersOnTheBoard()
 sudoku.sudokuBoard()
 sudoku.initializeSquaresBySquares()
 sudoku.discardBySquares()
-# print(sudoku.squaresBySquares)
-# sudoku.printBoard(sudoku.squaresBySquares)
+sudoku.replaceNumbersOnTheBoard()
 sudoku.printBoard(sudoku.emptySquares)
-# sudoku.printBoard(sudoku.squaresByColumns)
+sudoku.sudokuBoard()
+# sudoku.initializeEmptySquares()
+sudoku.discardBySquares()
+sudoku.replaceNumbersOnTheBoard()
+sudoku.printBoard(sudoku.emptySquares)
+sudoku.initializeSquaresByColumns()
+
+sudoku.discardByColumns()
+sudoku.replaceNumbersOnTheBoard()
+sudoku.sudokuBoard()
+# sudoku.discardByColumns()
+# sudoku.replaceNumbersOnTheBoard()
+# sudoku.sudokuBoard()
