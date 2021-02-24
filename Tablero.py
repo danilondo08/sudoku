@@ -135,11 +135,10 @@ class Board:
                 print('---------------------------------------')
     
     def replaceNumbersOnTheBoard(self):
-        variable=''
         for row in range(9):
             for column in range(9):
                 if self.squares[row][column]==' ':
-                        if len(self.emptySquares[row][column])==1:
+                    if len(self.emptySquares[row][column])==1:
                             self.squares[row][column]=self.emptySquares[row][column]
                             self.squares[row][column]= ' '.join([str(elem) for elem in self.squares[row][column]])
                             self.emptySquares[row][column]=[]
@@ -209,22 +208,30 @@ class Board:
 
 sudoku = Board([], [], [], [])
 sudoku.initializeSquares()
-sudoku.initializeEmptySquares()
-sudoku.initializeSquaresByColumns()
-sudoku.initializeSquaresBySquares()
-sudoku.discardByRows()
-sudoku.discardByColumns()
-sudoku.discardBySquares()
-sudoku.replaceNumbersOnTheBoard()
-sudoku.sudokuBoard()    
 
-sudoku.initializeSquares()
-sudoku.initializeEmptySquares()
-sudoku.initializeSquaresByColumns()
-sudoku.initializeSquaresBySquares()
-sudoku.discardByRows()
-sudoku.discardByColumns()
-sudoku.discardBySquares()
-sudoku.replaceNumbersOnTheBoard()
-sudoku.sudokuBoard()    
+# sudoku.sudokuBoard()
 
+while True:
+    sudoku.initializeEmptySquares()
+    sudoku.initializeSquaresByColumns()
+    sudoku.initializeSquaresBySquares()
+    sudoku.discardByRows()
+    sudoku.discardByColumns()
+    sudoku.discardBySquares()  
+    sudoku.replaceNumbersOnTheBoard()
+    sudoku.sudokuBoard() 
+    sudoku.printBoard(sudoku.emptySquares)
+    print(sudoku.squares)
+    for i in range(9):
+        for l in range(9):
+            if all(sudoku.squares[i][l] == ' '):
+                break
+# sudoku.initializeEmptySquares()
+# sudoku.initializeSquaresByColumns()
+# sudoku.initializeSquaresBySquares()
+# sudoku.discardByRows()
+# sudoku.discardByColumns()
+# sudoku.discardBySquares()  
+# sudoku.replaceNumbersOnTheBoard()
+# # sudoku.sudokuBoard() 
+# sudoku.printBoard(sudoku.emptySquares)
