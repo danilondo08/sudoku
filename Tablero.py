@@ -4,14 +4,15 @@ import copy
 
 class Board:
 
-    def __init__(self, squares, emptySquares, squaresByColumns, squaresBySquares):
+    def __init__(self, squares, emptySquares, squaresByColumns, squaresBySquares, numberOfEmptySquares):
         self.squares = squares
         self.emptySquares = emptySquares
         self.squaresByColumns = squaresByColumns
         self.squaresBySquares = squaresBySquares
+        self.numberOfEmptySquares = numberOfEmptySquares
 
     def initializeSquares(self):
-        with open("sudoku.txt", "r") as archivo:
+        with open("sudokuPrueba.txt", "r") as archivo:
             self.squares = [i.strip().split(',') for i in archivo.readlines()]
 
     def sudokuBoard(self):
@@ -205,13 +206,37 @@ class Board:
                     self.emptySquares[row][column] = self.__possibleNumbers(
                         self.emptySquares[row][column], self.squaresBySquares[8])
 
+    def calculateNumberOfEmptySquares(self):
+        count=0
+        for row in range(9):
+            count+= self.squares[row].count(' ')
+        return count
+        # cdelgado@nec.com.co
 
-sudoku = Board([], [], [], [])
+    def checkIfSudokuHasFuture(self):
+        for row in range(9):
+            for column in range(9):
+                if self.squares[row][column]==' ':
+                    if len(self.emptySquares[row][column])==0:
+                        print(row,',',column)
+                        return 'There is no future. Just Keep Trying!' 
+                    else:
+                        return False
+                   
+
+        
+
+sudoku = Board([], [], [], [], 0)
 sudoku.initializeSquares()
-
-# sudoku.sudokuBoard()
-
-while True:
+sudoku.sudokuBoard() 
+# sudoku.numberOfEmptySquares=sudoku.calculateNumberOfEmptySquares()
+# print(sudoku.countEmptySquares)
+print(sudoku.calculateNumberOfEmptySquares())
+print(sudoku.numberOfEmptySquares)
+while (True):
+    print('hola')
+    sudoku.numberOfEmptySquares=sudoku.calculateNumberOfEmptySquares()
+    # print(sudoku.numberOfEmptySquares)
     sudoku.initializeEmptySquares()
     sudoku.initializeSquaresByColumns()
     sudoku.initializeSquaresBySquares()
@@ -221,17 +246,14 @@ while True:
     sudoku.replaceNumbersOnTheBoard()
     sudoku.sudokuBoard() 
     sudoku.printBoard(sudoku.emptySquares)
-    print(sudoku.squares)
-    for i in range(9):
-        for l in range(9):
-            if all(sudoku.squares[i][l] == ' '):
-                break
-# sudoku.initializeEmptySquares()
-# sudoku.initializeSquaresByColumns()
-# sudoku.initializeSquaresBySquares()
-# sudoku.discardByRows()
-# sudoku.discardByColumns()
-# sudoku.discardBySquares()  
-# sudoku.replaceNumbersOnTheBoard()
-# # sudoku.sudokuBoard() 
-# sudoku.printBoard(sudoku.emptySquares)
+    sudoku.calculateNumberOfEmptySquares()
+    sudoku.checkIfSudokuHasFuture()
+    # print(sudoku.checkIfSudokuHasFuture())
+    # print(sudoku.calculateNumberOfEmptySquares())
+    # print(sudoku.numberOfEmptySquares)
+    if sudoku.calculateNumberOfEmptySquares()==0:
+        break
+    if sudoku.calculateNumberOfEmptySquares() <  sudoku.numberOfEmptySquares:
+        continue
+    else:
+        break
